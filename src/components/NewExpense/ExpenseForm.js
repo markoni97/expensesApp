@@ -8,7 +8,8 @@ const ExpenseForm = (props) => {
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
     enteredAmount: '',
-    enteredDate: ''
+    enteredDate: '',
+    showForm: false
   });
 
   const onTitleChangeHandler = (event) => {
@@ -45,7 +46,7 @@ const ExpenseForm = (props) => {
     event.preventDefault();
     const expenseData = {
       title: userInput.enteredTitle,
-      amount: userInput.enteredAmount,
+      amount: +userInput.enteredAmount,
       date: new Date(userInput.enteredDate)
     };
     //Pointer to a function
@@ -53,9 +54,32 @@ const ExpenseForm = (props) => {
     setUserInput({
       enteredTitle: '',
       enteredAmount: '',
-      enteredDate: ''
+      enteredDate: '',
+      showForm: false
     });
   };
+
+  const cancelHandler = () => {
+    setUserInput((prevState) => {
+      return {
+        ...prevState,
+        showForm: false
+      };
+    });
+  };
+
+  const openFormHandler = () => {
+    setUserInput((prevState) => {
+      return {
+        ...prevState,
+        showForm: true
+      };
+    });
+  }
+
+  if(!userInput.showForm) {
+    return <button type='button' onClick={openFormHandler}>Add New Expenses</button>;
+  }
 
   return (
     <form onSubmit={formSubmitHandler}>
@@ -75,6 +99,7 @@ const ExpenseForm = (props) => {
       </div>
       <div className={classes.NewExpenseActions}>
         <button type='submit'>Add Expense</button>
+        <button type='button' onClick={cancelHandler}>Cancel</button>
       </div>
     </form>
   );

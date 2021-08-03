@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import classes from "./App.module.css";
-import ExpenseList from "./components/Expenses/ExpenseList";
+import Expenses from "./components/Expenses/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
 
 const App = () => {
@@ -54,7 +54,7 @@ const App = () => {
   return (
     <div className={classes.App}>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <ExpenseList expenses={expenses} />
+      <Expenses expenses={expenses} />
     </div>
   );
 };
