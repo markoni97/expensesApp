@@ -1,15 +1,24 @@
+import React, { useState } from "react";
+
 import classes from "./App.module.css";
-import ExpenseList from "./components/ExpenseList";
+import ExpenseList from "./components/Expenses/ExpenseList";
+import NewExpense from "./components/NewExpense/NewExpense";
 
 const App = () => {
-  const expenses = [
+  //React hook
+  const [expenses, setExpenses] = useState([
     {
       id: "e1",
       title: "Toilet Paper",
       amount: 94.12,
       date: new Date(2020, 7, 14),
     },
-    { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
+    {
+      id: "e2",
+      title: "New TV",
+      amount: 799.49,
+      date: new Date(2021, 2, 12),
+    },
     {
       id: "e3",
       title: "Car Insurance",
@@ -22,12 +31,30 @@ const App = () => {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ]);
+
+  //Returning a new array of expense objects
+  const addExpenseHandler = (expense) => {
+    setExpenses((prevState) => {
+      return [
+        expense,
+        ...prevState
+      ];
+    });
+  };
+
+  //This is what is happening behind the scenes
+  // return React.createElement(
+  //   "div",
+  //   {},
+  //   React.createElement("h1", {}, "Hello React"),
+  //   React.createElement(ExpenseList, { expenses: expenses })
+  // );
 
   return (
     <div className={classes.App}>
-      <h1>Hello React</h1>
-      <ExpenseList expenses={expenses}/>
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <ExpenseList expenses={expenses} />
     </div>
   );
 };
